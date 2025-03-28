@@ -1,9 +1,7 @@
 <script setup>
-import { ref } from "vue";
-import checkIfLogedIn from "../utils/checkLoginStatus";
+import { onMounted, ref } from "vue";
 import supabase from "../utils/supabase";
 
-const props = defineProps(["loggedIn"]);
 const emit = defineEmits(["loginSuccess"]);
 
 const create = ref(false);
@@ -77,8 +75,8 @@ async function logIn(username, password) {
       class="login-button"
       @click="
         create.value
-          ? logIn(username, password)
-          : createUser(username, password, password2)
+          ? createUser(username, password, password2)
+          : logIn(username, password)
       "
     >
       {{ primaryButton }}
