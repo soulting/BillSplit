@@ -4,6 +4,7 @@ import supabase from "./utils/supabase.js";
 import AuthUseer from "./components/AuthUseer.vue";
 import checkIfLogedIn from "./utils/checkLoginStatus.js";
 import Dashboard from "./components/Dashboard.vue";
+import createGroup from "./utils/createGroup.js";
 
 const user = ref({
   status: "waiting",
@@ -45,7 +46,10 @@ onMounted(async () => {
   <div v-if="user.status === 'loggedIn'">
     <Dashboard :groups="user.groups" />
 
-    <nav><button @click="signOut">wyloguj</button></nav>
+    <nav>
+      <button @click="createGroup">nowa grupa</button
+      ><button @click="signOut">wyloguj</button>
+    </nav>
   </div>
 </template>
 

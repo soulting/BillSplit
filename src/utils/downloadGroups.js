@@ -9,6 +9,6 @@ export default async function downloadGroups(user) {
     user.value.groups = response.data;
     console.log("Added groups");
   } else {
-    console.log("No groups could be added");
+    console.error(`No groups could be added: ${response.error}`);
   }
 }
