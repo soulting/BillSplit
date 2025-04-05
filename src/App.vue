@@ -5,12 +5,15 @@ import AuthUseer from "./components/AuthUseer.vue";
 import checkIfLogedIn from "./utils/checkLoginStatus.js";
 import Dashboard from "./components/Dashboard.vue";
 import createGroup from "./utils/createGroup.js";
+import GroupActions from "./components/GroupActions.vue";
 
 const user = ref({
   status: "waiting",
   groups: [],
   curret_group: null,
 });
+
+const showGroupActions = ref(false);
 
 const myEvents = ref(null);
 
@@ -25,6 +28,10 @@ async function signOut() {
   checkIfLogedIn(user);
 }
 
+function actOnGroups() {
+  showGroupActions.value = true;
+}
+
 async function handleSuccessfullLogin() {
   checkIfLogedIn(user);
 }
@@ -35,7 +42,6 @@ onMounted(async () => {
 </script>
 
 <template>
-  <!-- <p>{{ user }}</p> -->
   <h1 v-if="user.status === 'loggedIn'" class="title-banner">Twoje grupy</h1>
   <div v-if="user.status === 'waiting'"></div>
   <AuthUseer
@@ -46,8 +52,10 @@ onMounted(async () => {
   <div v-if="user.status === 'loggedIn'">
     <Dashboard :groups="user.groups" />
 
+    <GroupActions class="group-actions" v-if="showGroupActions" />
+
     <nav>
-      <button @click="createGroup">nowa grupa</button
+      <button @click="actOnGroups">nowa grupa</button
       ><button @click="signOut">wyloguj</button>
     </nav>
   </div>
@@ -87,5 +95,12 @@ nav {
   right: 0;
   height: 10%;
   background: linear-gradient(45deg, #474ed7, #ce59f8);
+}
+
+.group-actions {
+  position: fixed;
+  bottom: 10%;
+  left: 0;
+  right: 0;
 }
 </style>
