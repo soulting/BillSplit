@@ -1,6 +1,6 @@
 import supabase from "./supabase";
 
-export default async function downloadGroups(user) {
+export default async function getGroups(user) {
   const response = await supabase
     .from("group")
     .select("group_name, group_icon, id");

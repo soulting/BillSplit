@@ -1,12 +1,11 @@
 <script setup>
 import { ref } from "vue";
+import Buttons from "./Buttons.vue";
 </script>
 
-<template>
-  <div class="group-action-container"></div>
-</template>
+<template></template>
 
-<style>
+<style scoped>
 .group-action-container {
   height: 300px;
   margin-left: 10px;
@@ -16,5 +15,6 @@ import { ref } from "vue";
   background-color: white;
   border: 1px solid rgba(0, 0, 0, 0.4);
   border-bottom: none;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
 }
 </style>

@@ -6,12 +6,17 @@ import checkIfLogedIn from "./utils/checkLoginStatus.js";
 import Dashboard from "./components/Dashboard.vue";
 import createGroup from "./utils/createGroup.js";
 import GroupActions from "./components/GroupActions.vue";
+import getGroup from "./utils/getGroup.js";
 
 const user = ref({
   status: "waiting",
   groups: [],
-  curret_group: null,
+  curretGroup: null,
 });
+
+async function getGroupDetails(groupID) {
+  getGroup(user, groupID);
+}
 
 const showGroupActions = ref(false);
 
@@ -29,7 +34,7 @@ async function signOut() {
 }
 
 function actOnGroups() {
-  showGroupActions.value = true;
+  showGroupActions.value = !showGroupActions.value;
 }
 
 async function handleSuccessfullLogin() {
@@ -50,7 +55,7 @@ onMounted(async () => {
   ></AuthUseer>
 
   <div v-if="user.status === 'loggedIn'">
-    <Dashboard :groups="user.groups" />
+    <Dashboard :groups="user.groups" :getGroupDetails="getGroupDetails" />
 
     <GroupActions class="group-actions" v-if="showGroupActions" />
 

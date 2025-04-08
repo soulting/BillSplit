@@ -1,5 +1,5 @@
 import supabase from "./supabase";
-import downloadGroups from "./downloadGroups";
+import downloadGroups from "./getGroups";
 
 export default async function checkIfLogedIn(user) {
   const response = await supabase.auth.getUser();
