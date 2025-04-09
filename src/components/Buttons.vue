@@ -20,7 +20,7 @@ const props = defineProps({
     <div class="group-information">
       <h3>{{ information.group_name }}</h3>
     </div>
-    <button class="btn-action" @click="() => buttonAction(information.id)">
+    <button class="btn-action" @click="() => buttonAction(information)">
       <img class="arrow-btn" src="../assets/right-arrow-black.png" alt="" />
     </button>
   </div>

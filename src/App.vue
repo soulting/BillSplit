@@ -7,11 +7,13 @@ import Dashboard from "./components/Dashboard.vue";
 import createGroup from "./utils/createGroup.js";
 import GroupActions from "./components/GroupActions.vue";
 import getGroup from "./utils/getGroup.js";
+import GroupDetails from "./components/GroupDetails.vue";
 
 const user = ref({
   status: "waiting",
   groups: [],
   curretGroup: null,
+  currentPage: "yourGroups",
 });
 
 async function getGroupDetails(groupID) {
@@ -47,7 +49,9 @@ onMounted(async () => {
 </script>
 
 <template>
-  <h1 v-if="user.status === 'loggedIn'" class="title-banner">Twoje grupy</h1>
+  <h1 v-if="user.status === 'loggedIn'" class="title-banner">
+    {{ user.currentPage }}
+  </h1>
   <div v-if="user.status === 'waiting'"></div>
   <AuthUseer
     v-if="user.status === 'loggedOut'"
@@ -55,7 +59,12 @@ onMounted(async () => {
   ></AuthUseer>
 
   <div v-if="user.status === 'loggedIn'">
-    <Dashboard :groups="user.groups" :getGroupDetails="getGroupDetails" />
+    <Dashboard
+      v-if="user.currentPage === 'yourGroups'"
+      :groups="user.groups"
+      :getGroupDetails="getGroupDetails"
+    />
+    <GroupDetails v-if="user.currentPage === 'groupDetails'" />
 
     <GroupActions class="group-actions" v-if="showGroupActions" />
 
