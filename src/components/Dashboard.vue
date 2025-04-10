@@ -28,7 +28,7 @@ const props = defineProps({
 .groups {
   display: flex;
   flex-direction: column;
-  background-color: white;
+  background-color: rgb(55, 55, 55);
   position: fixed;
   top: 10%;
   left: 0;

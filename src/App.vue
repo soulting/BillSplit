@@ -20,6 +20,12 @@ async function getGroupDetails(groupID) {
   getGroup(user, groupID);
 }
 
+const returnToDashboard = () => {
+  console.log("asdfasdfa");
+  user.value.currentPage = "yourGroups";
+  user.value.curretGroup = null;
+};
+
 const showGroupActions = ref(false);
 
 const myEvents = ref(null);
@@ -49,9 +55,6 @@ onMounted(async () => {
 </script>
 
 <template>
-  <h1 v-if="user.status === 'loggedIn'" class="title-banner">
-    {{ user.currentPage }}
-  </h1>
   <div v-if="user.status === 'waiting'"></div>
   <AuthUseer
     v-if="user.status === 'loggedOut'"
@@ -64,7 +67,11 @@ onMounted(async () => {
       :groups="user.groups"
       :getGroupDetails="getGroupDetails"
     />
-    <GroupDetails v-if="user.currentPage === 'groupDetails'" />
+    <GroupDetails
+      v-if="user.currentPage === 'groupDetails'"
+      :returnToDashboard="returnToDashboard"
+      :curretGroup="user.curretGroup"
+    />
 
     <GroupActions class="group-actions" v-if="showGroupActions" />
 

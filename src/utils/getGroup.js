@@ -9,6 +9,7 @@ export default async function getGroups(user, group) {
   if (response.data) {
     user.value.curretGroup = {
       group_name: group.group_name,
+      group_icon: group.group_icon,
       group_id: group.id,
       group_payments: response.data,
     };
