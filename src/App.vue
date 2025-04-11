@@ -76,8 +76,11 @@ onMounted(async () => {
     <GroupActions class="group-actions" v-if="showGroupActions" />
 
     <nav>
-      <button @click="actOnGroups">nowa grupa</button
-      ><button @click="signOut">wyloguj</button>
+      <button @click="actOnGroups">
+        <img src="./assets/group.png" alt="logout-button" /></button
+      ><button @click="signOut">
+        <img src="./assets/logout.png" alt="logout-button" />
+      </button>
     </nav>
   </div>
 </template>
@@ -92,7 +95,7 @@ onMounted(async () => {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(45deg, #474ed7, #ce59f8);
+  background-color: rgb(55, 55, 55);
 }
 
 .title-banner {
@@ -115,7 +118,26 @@ nav {
   left: 0;
   right: 0;
   height: 10%;
-  background: linear-gradient(45deg, #474ed7, #ce59f8);
+  /* border-color: white; */
+  /* border: solid 1px; */
+  background-color: rgb(45, 45, 45);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+nav button {
+  height: 60px;
+  width: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+}
+
+button img {
+  height: 100%;
+  width: auto;
 }
 
 .group-actions {

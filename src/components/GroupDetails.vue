@@ -52,9 +52,9 @@ const props = defineProps({
 .back-btn {
   background-color: rgba(0, 0, 0, 0.5);
   position: fixed;
-  height: 40px;
-  width: 40px;
-  border-radius: 20px;
+  height: 46px;
+  width: 46px;
+  border-radius: 23px;
   left: 0;
   top: 0;
   margin-top: 10px;

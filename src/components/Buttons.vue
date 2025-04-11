@@ -21,7 +21,7 @@ const props = defineProps({
       <h3>{{ information.group_name }}</h3>
     </div>
     <button class="btn-action" @click="() => buttonAction(information)">
-      <img class="arrow-btn" src="../assets/right-arrow-black.png" alt="" />
+      <img class="arrow-btn" src="../assets/right-arrow.png" alt="" />
     </button>
   </div>
 </template>
@@ -31,11 +31,11 @@ const props = defineProps({
   display: flex;
   flex-direction: row;
   align-items: center;
-  background: white;
+  background-color: rgb(45, 45, 45);
   border-radius: 10px;
   height: 75px;
+  padding-left: 10px;
   box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
-  border: rgba(0, 0, 0, 0.5) 0.1px solid;
   position: relative;
 }
 
@@ -74,7 +74,7 @@ img {
 
 h3 {
   margin: 0;
-  color: rgba(0, 0, 0, 0.9);
+  color: white;
 }
 
 .btn-action {
@@ -89,7 +89,7 @@ h3 {
 }
 
 .btn-action img {
-  height: 35px;
+  height: 40px;
 }
 </style>
 
