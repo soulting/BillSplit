@@ -8,29 +8,42 @@ import createGroup from "./utils/createGroup.js";
 import GroupActions from "./components/GroupActions.vue";
 import getGroup from "./utils/getGroup.js";
 import GroupDetails from "./components/GroupDetails.vue";
+import JoinGroup from "./components/JoinGroup.vue";
+import insertUserEvent from "./utils/insertUserEvent.js";
 
 const user = ref({
+  userId: null,
   status: "waiting",
   groups: [],
   curretGroup: null,
   currentPage: "yourGroups",
 });
 
+const showGroupActions = ref(false);
+const showJoinGroupContainer = ref(false);
+
+const myEvents = ref(null);
+
+function joinGroup(group_name, group_password) {
+  insertUserEvent(group_name);
+}
+
+function returnToDashboard() {
+  user.value.currentPage = "yourGroups";
+  user.value.curretGroup = null;
+}
+
+function joinGroupAction() {
+  showGroupActions.value = !showGroupActions.value;
+  showJoinGroupContainer.value = true;
+}
+
 async function getGroupDetails(groupID) {
   getGroup(user, groupID);
 }
 
-const returnToDashboard = () => {
-  console.log("asdfasdfa");
-  user.value.currentPage = "yourGroups";
-  user.value.curretGroup = null;
-};
-
-const showGroupActions = ref(false);
-
-const myEvents = ref(null);
-
 async function signOut() {
+  actOnGroups();
   const { error } = await supabase.auth.signOut();
 
   if (error) {
@@ -43,6 +56,7 @@ async function signOut() {
 
 function actOnGroups() {
   showGroupActions.value = !showGroupActions.value;
+  showJoinGroupContainer.value = false;
 }
 
 async function handleSuccessfullLogin() {
@@ -55,11 +69,10 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div v-if="user.status === 'waiting'"></div>
   <AuthUseer
     v-if="user.status === 'loggedOut'"
     @loginSuccess="handleSuccessfullLogin"
-  ></AuthUseer>
+  />
 
   <div v-if="user.status === 'loggedIn'">
     <Dashboard
@@ -73,11 +86,20 @@ onMounted(async () => {
       :curretGroup="user.curretGroup"
     />
 
-    <GroupActions class="group-actions" v-if="showGroupActions" />
+    <GroupActions
+      v-if="showGroupActions"
+      class="group-actions"
+      :joinGroupAction="joinGroupAction"
+    />
+    <JoinGroup
+      v-if="showJoinGroupContainer"
+      class="group-actions"
+      :joinGroup="joinGroup"
+    />
 
     <nav>
       <button @click="actOnGroups">
-        <img src="./assets/group.png" alt="logout-button" /></button
+        <img src="./assets/group.png" alt="actions-button" /></button
       ><button @click="signOut">
         <img src="./assets/logout.png" alt="logout-button" />
       </button>
@@ -118,8 +140,6 @@ nav {
   left: 0;
   right: 0;
   height: 10%;
-  /* border-color: white; */
-  /* border: solid 1px; */
   background-color: rgb(45, 45, 45);
   display: flex;
   align-items: center;

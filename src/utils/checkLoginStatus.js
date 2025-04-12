@@ -5,6 +5,7 @@ export default async function checkIfLogedIn(user) {
   const response = await supabase.auth.getUser();
   if (response.data.user) {
     user.value.status = "loggedIn";
+    user.value.userId = response.data.user.id;
     console.log("Logged in successfully, reloading the page");
   } else {
     user.value.status = "loggedOut";

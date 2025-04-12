@@ -107,7 +107,6 @@ h2 {
   top: 50px;
   left: 50%;
   transform: translateX(-50%);
-
   width: 85%;
   background: linear-gradient(45deg, #474ed7, #ce59f8);
   -webkit-background-clip: text;
