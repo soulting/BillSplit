@@ -4,46 +4,57 @@ import supabase from "./utils/supabase.js";
 import AuthUseer from "./components/AuthUseer.vue";
 import checkIfLogedIn from "./utils/checkLoginStatus.js";
 import Dashboard from "./components/Dashboard.vue";
-import createGroup from "./utils/createGroup.js";
-import GroupActions from "./components/GroupActions.vue";
-import getGroup from "./utils/getGroup.js";
-import GroupDetails from "./components/GroupDetails.vue";
-import JoinGroup from "./components/JoinGroup.vue";
+import insertEvent from "./utils/insertEvent.js";
+import EventActions from "./components/EventActions.vue";
+import getEvent from "./utils/getEvent.js";
+import EventDetails from "./components/EventDetails.vue";
+import JoinEvent from "./components/JoinEvent.vue";
 import insertUserEvent from "./utils/insertUserEvent.js";
+import CreateEvent from "./components/CreateEvent.vue";
 
 const user = ref({
   userId: null,
   status: "waiting",
-  groups: [],
-  curretGroup: null,
-  currentPage: "yourGroups",
+  events: [],
+  curretEvent: null,
+  currentPage: "yourEvents",
 });
 
-const showGroupActions = ref(false);
-const showJoinGroupContainer = ref(false);
+const showEventActions = ref(false);
+const showJoinEventContainer = ref(false);
+const showcreateEventContainer = ref(false);
 
 const myEvents = ref(null);
 
-function joinGroup(group_name, group_password) {
-  insertUserEvent(group_name);
+function joinEvent(event_name, event_password) {
+  insertUserEvent(event_name);
+}
+
+function createEvent(event_name, event_password, even_icon) {
+  insertEvent(user.value.userId, event_name, event_password, even_icon);
 }
 
 function returnToDashboard() {
-  user.value.currentPage = "yourGroups";
-  user.value.curretGroup = null;
+  user.value.currentPage = "yourEvents";
+  user.value.curretEvent = null;
 }
 
-function joinGroupAction() {
-  showGroupActions.value = !showGroupActions.value;
-  showJoinGroupContainer.value = true;
+function joinEventAction() {
+  showEventActions.value = !showEventActions.value;
+  showJoinEventContainer.value = true;
 }
 
-async function getGroupDetails(groupID) {
-  getGroup(user, groupID);
+function createEventAction() {
+  showEventActions.value = !showEventActions.value;
+  showcreateEventContainer.value = true;
+}
+
+async function getEventDetails(eventID) {
+  getEvent(user, eventID);
 }
 
 async function signOut() {
-  actOnGroups();
+  actOnEvents();
   const { error } = await supabase.auth.signOut();
 
   if (error) {
@@ -54,9 +65,9 @@ async function signOut() {
   checkIfLogedIn(user);
 }
 
-function actOnGroups() {
-  showGroupActions.value = !showGroupActions.value;
-  showJoinGroupContainer.value = false;
+function actOnEvents() {
+  showEventActions.value = !showEventActions.value;
+  showJoinEventContainer.value = false;
 }
 
 async function handleSuccessfullLogin() {
@@ -76,30 +87,36 @@ onMounted(async () => {
 
   <div v-if="user.status === 'loggedIn'">
     <Dashboard
-      v-if="user.currentPage === 'yourGroups'"
-      :groups="user.groups"
-      :getGroupDetails="getGroupDetails"
+      v-if="user.currentPage === 'yourEvents'"
+      :events="user.events"
+      :getEventDetails="getEventDetails"
     />
-    <GroupDetails
-      v-if="user.currentPage === 'groupDetails'"
+    <EventDetails
+      v-if="user.currentPage === 'eventDetails'"
       :returnToDashboard="returnToDashboard"
-      :curretGroup="user.curretGroup"
+      :curretEvent="user.curretEvent"
     />
 
-    <GroupActions
-      v-if="showGroupActions"
-      class="group-actions"
-      :joinGroupAction="joinGroupAction"
+    <EventActions
+      v-if="showEventActions"
+      class="event-actions"
+      :joinEventAction="joinEventAction"
+      :createEventAction="createEventAction"
     />
-    <JoinGroup
-      v-if="showJoinGroupContainer"
-      class="group-actions"
-      :joinGroup="joinGroup"
+    <JoinEvent
+      v-if="showJoinEventContainer"
+      class="event-actions"
+      :joinEvent="joinEvent"
+    />
+    <CreateEvent
+      v-if="showcreateEventContainer"
+      class="event-actions"
+      :createEvent="createEvent"
     />
 
     <nav>
-      <button @click="actOnGroups">
-        <img src="./assets/group.png" alt="actions-button" /></button
+      <button @click="actOnEvents">
+        <img src="./assets/event.png" alt="actions-button" /></button
       ><button @click="signOut">
         <img src="./assets/logout.png" alt="logout-button" />
       </button>
@@ -160,7 +177,7 @@ button img {
   width: auto;
 }
 
-.group-actions {
+.event-actions {
   position: fixed;
   bottom: 10%;
   left: 0;

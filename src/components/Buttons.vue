@@ -16,9 +16,9 @@ const props = defineProps({
 
 <template>
   <div class="button-container">
-    <img :src="information.group_icon" alt="group picture" />
-    <div class="group-information">
-      <h3>{{ information.group_name }}</h3>
+    <img :src="information.event_icon" alt="event picture" />
+    <div class="event-information">
+      <h3>{{ information.event_name }}</h3>
     </div>
     <button class="btn-action" @click="() => buttonAction(information)">
       <img class="arrow-btn" src="../assets/right-arrow.png" alt="" />
@@ -39,7 +39,7 @@ const props = defineProps({
   position: relative;
 }
 
-.group button {
+.event button {
   position: absolute;
   right: 15px;
   top: 50%;
@@ -51,7 +51,7 @@ const props = defineProps({
   margin-right: 15px;
 }
 
-.group button img {
+.event button img {
   height: 100%;
   margin: 0;
   padding: 0;
@@ -64,7 +64,7 @@ img {
   border-radius: 5px;
 }
 
-.group-information {
+.event-information {
   display: flex;
   flex-direction: column;
   justify-content: center;

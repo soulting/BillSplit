@@ -3,31 +3,34 @@ import { ref } from "vue";
 import Buttons from "./Buttons.vue";
 
 const props = defineProps({
-  joinGroupAction: {
+  joinEventAction: {
+    type: Function,
+  },
+  createEventAction: {
     type: Function,
   },
 });
 
-const createGroup = {
-  group_icon: "src/assets/add-group.png",
-  group_name: "Stwórz grupę",
+const createEvent = {
+  event_icon: "src/assets/add-event.png",
+  event_name: "Stwórz grupę",
 };
 
-const joinGroup = {
-  group_icon: "src/assets/join.png",
-  group_name: "Dołącz do grupy",
+const joinEvent = {
+  event_icon: "src/assets/join.png",
+  event_name: "Dołącz do grupy",
 };
 </script>
 
 <template>
-  <div class="group-action-container">
-    <Buttons :information="createGroup" />
-    <Buttons :information="joinGroup" :buttonAction="joinGroupAction" />
+  <div class="event-action-container">
+    <Buttons :information="createEvent" :buttonAction="createEventAction" />
+    <Buttons :information="joinEvent" :buttonAction="joinEventAction" />
   </div>
 </template>
 
 <style scoped>
-.group-action-container {
+.event-action-container {
   height: 200px;
   margin-left: 10px;
   margin-right: 10px;

@@ -1,20 +1,20 @@
 import supabase from "./supabase";
 
-export default async function insertUserEvent(groupName) {
+export default async function insertUserEvent(eventName) {
   const selectResponse = await supabase
-    .from("group")
+    .from("event")
     .select("id")
-    .eq("group_name", groupName)
+    .eq("event_name", eventName)
     .single();
 
   if (selectResponse.error) {
-    throw new Error("Group not found");
+    throw new Error("Event not found");
   }
-  const groupID = selectResponse.data.id;
+  const eventID = selectResponse.data.id;
 
   const insertResponse = await supabase
     .from("user_event")
-    .insert([{ event_id: groupID }]);
+    .insert([{ event_id: eventID }]);
 
   if (insertResponse.error) {
     throw new Error("Insert error");

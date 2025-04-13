@@ -1,5 +1,5 @@
 import supabase from "./supabase";
-import downloadGroups from "./getGroups";
+import downloadEvents from "./getEvents";
 
 export default async function checkIfLogedIn(user) {
   const response = await supabase.auth.getUser();
@@ -13,8 +13,8 @@ export default async function checkIfLogedIn(user) {
   }
 
   if (user.value.status === "loggedIn") {
-    downloadGroups(user);
+    downloadEvents(user);
   } else {
-    user.value.groups = [];
+    user.value.events = [];
   }
 }

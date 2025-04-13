@@ -3,29 +3,29 @@ import { ref } from "vue";
 import Buttons from "./Buttons.vue";
 
 const props = defineProps({
-  groups: {
+  events: {
     type: Object,
     reqired: true,
   },
-  getGroupDetails: {
+  getEventDetails: {
     type: Function,
   },
 });
 </script>
 
 <template>
-  <div class="groups">
+  <div class="events">
     <Buttons
-      v-for="group in props.groups"
-      :key="group.id"
-      :information="group"
-      :buttonAction="getGroupDetails"
+      v-for="event in props.events"
+      :key="event.id"
+      :information="event"
+      :buttonAction="getEventDetails"
     ></Buttons>
   </div>
 </template>
 
 <style scoped>
-.groups {
+.events {
   display: flex;
   flex-direction: column;
   background-color: rgb(55, 55, 55);

@@ -6,7 +6,7 @@ const props = defineProps({
     type: Function,
     reqired: true,
   },
-  curretGroup: {
+  curretEvent: {
     type: Object,
     required: true,
   },
@@ -19,8 +19,8 @@ const props = defineProps({
       <img src="../assets/left-arrow.png" alt="backwards button" />
     </button>
     <div class="header-container">
-      <img :src="`${curretGroup.group_icon}`" alt="group icon" />
-      <h2>{{ curretGroup.group_name }}</h2>
+      <img :src="`${curretEvent.event_icon}`" alt="event icon" />
+      <h2>{{ curretEvent.event_name }}</h2>
     </div>
     <div class="button-container">
       <button>Wydatki</button>
