@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from "vue";
+import Swal from "sweetalert2";
 
 const props = defineProps({
   createEvent: {
@@ -7,15 +8,34 @@ const props = defineProps({
   },
 });
 
-const eventName = ref(null);
-const password = ref(null);
-const repeatPassword = ref(null);
+const alert = {
+  title: "Błąd",
+  text: "Grupa o takiej nazwie już istnieje",
+  icon: "error",
+  confirmButtonText: "OK",
+  background: "#373737",
+  confirmButtonColor: "#2d2d2d",
+  color: "#ffffff",
+};
+
+const eventName = ref("");
+const password = ref("");
+const repeatPassword = ref("");
 const even_icon = ref("src/assets/default.png");
 
 function createEventHandler() {
-  if (password.value === repeatPassword.value) {
-    props.createEvent(eventName.value, password.value, even_icon.value);
+  if (password.value.length < 5) {
+    Swal.fire({ ...alert, text: "Hasło jest za krótkie" });
+    return;
   }
+  if (password.value !== repeatPassword.value) {
+    Swal.fire({ ...alert, text: "Hasła się różnią" });
+    return;
+  }
+  props.createEvent(eventName.value, password.value, even_icon.value);
+  eventName.value = "";
+  password.value = "";
+  repeatPassword.value = "";
 }
 </script>
 

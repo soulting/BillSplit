@@ -32,6 +32,9 @@ function joinEvent(event_name, event_password) {
 
 function createEvent(event_name, event_password, even_icon) {
   insertEvent(user.value.userId, event_name, event_password, even_icon);
+  checkIfLogedIn(user);
+  showEventActions.value = false;
+  showcreateEventContainer.value = false;
 }
 
 function returnToDashboard() {

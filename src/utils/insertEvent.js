@@ -1,4 +1,15 @@
 import supabase from "./supabase";
+import Swal from "sweetalert2";
+
+const alert = {
+  title: "Błąd",
+  text: "Grupa o takiej nazwie już istnieje",
+  icon: "error",
+  confirmButtonText: "OK",
+  background: "#373737",
+  confirmButtonColor: "#2d2d2d",
+  color: "#ffffff",
+};
 
 export default async function createEvent(
   userId,
@@ -15,9 +26,15 @@ export default async function createEvent(
 
   if (response.error) {
     if (response.error.code === "23505") {
-      alert("Taka grupa już istnieje");
+      Swal.fire({ ...alert, text: "Grupa o takiej nazwie już istnieje" });
+    } else {
+      Swal.fire({
+        ...alert,
+        text: "Coś poszło nie tak, spróbuj ponownie później",
+      });
     }
     console.error(`Something went wrong:`, response.error.code);
+
     return false;
   } else {
     console.log("created new event");
