@@ -22,7 +22,7 @@ const user = ref({
 
 const showEventActions = ref(false);
 const showJoinEventContainer = ref(false);
-const showcreateEventContainer = ref(false);
+const showCreateEventContainer = ref(false);
 
 const myEvents = ref(null);
 
@@ -34,7 +34,7 @@ function createEvent(event_name, event_password, even_icon) {
   insertEvent(user.value.userId, event_name, event_password, even_icon);
   checkIfLogedIn(user);
   showEventActions.value = false;
-  showcreateEventContainer.value = false;
+  showCreateEventContainer.value = false;
 }
 
 function returnToDashboard() {
@@ -49,7 +49,7 @@ function joinEventAction() {
 
 function createEventAction() {
   showEventActions.value = !showEventActions.value;
-  showcreateEventContainer.value = true;
+  showCreateEventContainer.value = true;
 }
 
 async function getEventDetails(eventID) {
@@ -71,6 +71,7 @@ async function signOut() {
 function actOnEvents() {
   showEventActions.value = !showEventActions.value;
   showJoinEventContainer.value = false;
+  showCreateEventContainer.value = false;
 }
 
 async function handleSuccessfullLogin() {
@@ -112,15 +113,17 @@ onMounted(async () => {
       :joinEvent="joinEvent"
     />
     <CreateEvent
-      v-if="showcreateEventContainer"
+      v-if="showCreateEventContainer"
       class="event-actions"
       :createEvent="createEvent"
     />
 
     <nav>
       <button @click="actOnEvents">
-        <img src="./assets/event.png" alt="actions-button" /></button
-      ><button @click="signOut">
+        <img src="./assets/event.png" alt="actions-button" />
+      </button>
+      <!-- <button @click="signOut"> -->
+      <button @click="() => insertUserEvent(user.userId, 'test1', 'test1')">
         <img src="./assets/logout.png" alt="logout-button" />
       </button>
     </nav>

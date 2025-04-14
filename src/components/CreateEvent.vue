@@ -24,6 +24,10 @@ const repeatPassword = ref("");
 const even_icon = ref("src/assets/default.png");
 
 function createEventHandler() {
+  if (eventName.value.length < 5) {
+    Swal.fire({ ...alert, text: "Nazwa jest za krótkie" });
+    return;
+  }
   if (password.value.length < 5) {
     Swal.fire({ ...alert, text: "Hasło jest za krótkie" });
     return;

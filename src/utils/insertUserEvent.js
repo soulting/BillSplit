@@ -1,23 +1,57 @@
 import supabase from "./supabase";
+import Swal from "sweetalert2";
 
-export default async function insertUserEvent(eventName) {
-  const selectResponse = await supabase
-    .from("event")
-    .select("id")
-    .eq("event_name", eventName)
-    .single();
+const alert = {
+  title: "Błąd",
+  text: "Grupa o takiej nazwie już istnieje",
+  icon: "error",
+  confirmButtonText: "OK",
+  background: "#373737",
+  confirmButtonColor: "#2d2d2d",
+  color: "#ffffff",
+};
 
-  if (selectResponse.error) {
-    throw new Error("Event not found");
-  }
-  const eventID = selectResponse.data.id;
+export default async function insertUserEvent(
+  userId,
+  event_name,
+  event_password
+) {
+  const response = await supabase.rpc("insert_user_event", {
+    userid: userId,
+    event_name: event_name,
+    event_password: event_password,
+  });
 
-  const insertResponse = await supabase
-    .from("user_event")
-    .insert([{ event_id: eventID }]);
-
-  if (insertResponse.error) {
-    throw new Error("Insert error");
-  }
-  console.log("insert succed ");
+  console.log(response);
 }
+
+// export default async function createEvent(
+//   userId,
+//   event_name,
+//   event_password,
+//   event_icon
+// ) {
+//   const response = await supabase.rpc("create_event", {
+//     userid: userId,
+//     event_name: event_name,
+//     event_password: event_password,
+//     event_icon: event_icon,
+//   });
+
+//   if (response.error) {
+//     if (response.error.code === "23505") {
+//       Swal.fire({ ...alert, text: "Grupa o takiej nazwie już istnieje" });
+//     } else {
+//       Swal.fire({
+//         ...alert,
+//         text: "Coś poszło nie tak, spróbuj ponownie później",
+//       });
+//     }
+//     console.error(`Something went wrong:`, response.error.code);
+
+//     return false;
+//   } else {
+//     console.log("created new event");
+//     return true;
+//   }
+// }
