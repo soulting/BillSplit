@@ -2,7 +2,7 @@
 import { ref } from "vue";
 
 const props = defineProps({
-  joinGroup: {
+  joinEvent: {
     type: Function,
   },
 });
@@ -17,7 +17,7 @@ const password = ref(null);
     <input type="text" v-model="eventName" />
     <h3>Hasło</h3>
     <input type="password" v-model="password" />
-    <button @click="() => joinGroup(eventName, password)">Dołącz</button>
+    <button @click="() => joinEvent(eventName, password)">Dołącz</button>
   </div>
 </template>
 

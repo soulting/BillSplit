@@ -27,7 +27,7 @@ const showCreateEventContainer = ref(false);
 const myEvents = ref(null);
 
 function joinEvent(event_name, event_password) {
-  insertUserEvent(event_name);
+  insertUserEvent(user.value.userId, event_name, event_password);
 }
 
 function createEvent(event_name, event_password, even_icon) {
@@ -123,7 +123,7 @@ onMounted(async () => {
         <img src="./assets/event.png" alt="actions-button" />
       </button>
       <!-- <button @click="signOut"> -->
-      <button @click="() => insertUserEvent(user.userId, 'test1', 'test1')">
+      <button @click="() => insertUserEvent(user.userId, 'test3', 'test3')">
         <img src="./assets/logout.png" alt="logout-button" />
       </button>
     </nav>
