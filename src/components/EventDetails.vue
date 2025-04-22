@@ -37,7 +37,7 @@ const props = defineProps({
   display: flex;
   flex-direction: column;
   align-items: center;
-  top: 0;
+  top: 10%;
   left: 0;
   right: 0;
   bottom: 10%;
@@ -56,14 +56,15 @@ const props = defineProps({
   width: 46px;
   border-radius: 23px;
   left: 0;
-  top: 0;
-  margin-top: 10px;
-  margin-left: 5px;
+  top: 5%;
+  margin: 0;
   padding: 0;
   padding-right: 3px;
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 1;
+  transform: translate(25%, -50%);
 }
 
 .back-btn img {

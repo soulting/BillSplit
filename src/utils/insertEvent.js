@@ -35,9 +35,17 @@ export default async function createEvent(
     }
     console.error(`Something went wrong:`, response.error.code);
 
-    return false;
+    return;
   } else {
-    console.log("created new event");
-    return true;
+    if (response.data === "event_already_exists") {
+      Swal.fire({ ...alert, text: "Grupa o takiej nazwie już istnieje" });
+    } else if (response.data === "event_created") {
+      Swal.fire({
+        ...alert,
+        text: "Stworzono grupę",
+        icon: "success",
+        title: "Sukses",
+      });
+    }
   }
 }

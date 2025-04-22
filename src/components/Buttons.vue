@@ -37,6 +37,7 @@ const props = defineProps({
   padding-left: 10px;
   box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
   position: relative;
+  user-select: none;
 }
 
 .event button {

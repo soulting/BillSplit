@@ -6,6 +6,7 @@ export default async function checkIfLogedIn(user) {
   if (response.data.user) {
     user.value.status = "loggedIn";
     user.value.userId = response.data.user.id;
+    user.value.username = response.data.user.email.split("@").at(0);
     console.log("Logged in successfully, reloading the page");
   } else {
     user.value.status = "loggedOut";

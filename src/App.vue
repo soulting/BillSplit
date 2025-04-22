@@ -11,14 +11,30 @@ import EventDetails from "./components/EventDetails.vue";
 import JoinEvent from "./components/JoinEvent.vue";
 import insertUserEvent from "./utils/insertUserEvent.js";
 import CreateEvent from "./components/CreateEvent.vue";
+import getEvents from "./utils/getEvents.js";
 
 const user = ref({
   userId: null,
+  username: null,
   status: "waiting",
   events: [],
   curretEvent: null,
   currentPage: "yourEvents",
 });
+
+function subscribeToUserEvents() {
+  const changes = supabase
+    .channel("schema-db-changes")
+    .on(
+      "postgres_changes",
+      {
+        event: "INSERT",
+        schema: "public",
+      },
+      (payload) => getEvents(user)
+    )
+    .subscribe();
+}
 
 const showEventActions = ref(false);
 const showJoinEventContainer = ref(false);
@@ -28,11 +44,12 @@ const myEvents = ref(null);
 
 function joinEvent(event_name, event_password) {
   insertUserEvent(user.value.userId, event_name, event_password);
+  showEventActions.value = false;
+  showJoinEventContainer.value = false;
 }
 
 function createEvent(event_name, event_password, even_icon) {
   insertEvent(user.value.userId, event_name, event_password, even_icon);
-  checkIfLogedIn(user);
   showEventActions.value = false;
   showCreateEventContainer.value = false;
 }
@@ -89,11 +106,15 @@ onMounted(async () => {
     @loginSuccess="handleSuccessfullLogin"
   />
 
-  <div v-if="user.status === 'loggedIn'">
+  <div class="content-container" v-if="user.status === 'loggedIn'">
+    <div class="upper-banner">
+      <h2>Witaj {{ user.username }}</h2>
+    </div>
     <Dashboard
       v-if="user.currentPage === 'yourEvents'"
       :events="user.events"
       :getEventDetails="getEventDetails"
+      :subscribeToUserEvents="subscribeToUserEvents"
     />
     <EventDetails
       v-if="user.currentPage === 'eventDetails'"
@@ -123,7 +144,7 @@ onMounted(async () => {
         <img src="./assets/event.png" alt="actions-button" />
       </button>
       <!-- <button @click="signOut"> -->
-      <button @click="() => insertUserEvent(user.userId, 'test3', 'test3')">
+      <button @click="signOut">
         <img src="./assets/logout.png" alt="logout-button" />
       </button>
     </nav>
@@ -132,7 +153,6 @@ onMounted(async () => {
 
 <style>
 #app {
-  height: 100vh;
   width: 100vw;
   margin: 0;
   padding: 0;
@@ -143,7 +163,7 @@ onMounted(async () => {
   background-color: rgb(55, 55, 55);
 }
 
-.title-banner {
+.upper-banner {
   position: fixed;
   display: flex;
   align-items: center;
@@ -153,8 +173,9 @@ onMounted(async () => {
   right: 0;
   padding: 0;
   margin: 0;
-  height: 10%;
-  background: linear-gradient(45deg, #474ed7, #ce59f8);
+  height: 80px;
+  background-color: rgb(45, 45, 45);
+  z-index: 1;
 }
 
 nav {
@@ -162,7 +183,7 @@ nav {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 10%;
+  height: 80px;
   background-color: rgb(45, 45, 45);
   display: flex;
   align-items: center;
@@ -185,8 +206,13 @@ button img {
 
 .event-actions {
   position: fixed;
-  bottom: 10%;
+  bottom: 60px;
   left: 0;
   right: 0;
+}
+
+.content-container {
+  width: 80%;
+  margin-top: 100px;
 }
 </style>

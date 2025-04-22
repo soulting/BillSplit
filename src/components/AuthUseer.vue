@@ -74,7 +74,7 @@ async function logIn(username, password) {
     <button
       class="login-button"
       @click="
-        create.value
+        create
           ? createUser(username, password, password2)
           : logIn(username, password)
       "
