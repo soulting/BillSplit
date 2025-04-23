@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 
 const props = defineProps({
   returnToDashboard: {
@@ -10,6 +10,13 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  loadInnerEventData: {
+    type: Function,
+  },
+});
+
+onMounted(() => {
+  props.loadInnerEventData();
 });
 </script>
 
@@ -79,7 +86,7 @@ const props = defineProps({
   border-radius: 10px;
   overflow: hidden;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 .button-container button {

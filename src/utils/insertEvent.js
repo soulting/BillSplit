@@ -12,16 +12,17 @@ const alert = {
 };
 
 export default async function createEvent(
-  userId,
+  user,
   event_name,
   event_password,
   event_icon
 ) {
   const response = await supabase.rpc("create_event", {
-    userid: userId,
-    event_name: event_name,
-    event_password: event_password,
-    event_icon: event_icon,
+    rec_user_id: user.value.userId,
+    rec_user_name: user.value.username,
+    rec_event_name: event_name,
+    rec_event_password: event_password,
+    rec_event_icon: event_icon,
   });
 
   if (response.error) {

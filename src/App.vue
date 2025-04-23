@@ -12,6 +12,7 @@ import JoinEvent from "./components/JoinEvent.vue";
 import insertUserEvent from "./utils/insertUserEvent.js";
 import CreateEvent from "./components/CreateEvent.vue";
 import getEvents from "./utils/getEvents.js";
+import getInnerEventData from "./utils/getEventData.js";
 
 const user = ref({
   userId: null,
@@ -36,6 +37,10 @@ function subscribeToUserEvents() {
     .subscribe();
 }
 
+function loadInnerEventData() {
+  getInnerEventData(user.value.curretEvent.event_id);
+}
+
 const showEventActions = ref(false);
 const showJoinEventContainer = ref(false);
 const showCreateEventContainer = ref(false);
@@ -43,13 +48,13 @@ const showCreateEventContainer = ref(false);
 const myEvents = ref(null);
 
 function joinEvent(event_name, event_password) {
-  insertUserEvent(user.value.userId, event_name, event_password);
+  insertUserEvent(user, event_name, event_password);
   showEventActions.value = false;
   showJoinEventContainer.value = false;
 }
 
 function createEvent(event_name, event_password, even_icon) {
-  insertEvent(user.value.userId, event_name, event_password, even_icon);
+  insertEvent(user, event_name, event_password, even_icon);
   showEventActions.value = false;
   showCreateEventContainer.value = false;
 }
@@ -120,6 +125,7 @@ onMounted(async () => {
       v-if="user.currentPage === 'eventDetails'"
       :returnToDashboard="returnToDashboard"
       :curretEvent="user.curretEvent"
+      :loadInnerEventData="loadInnerEventData"
     />
 
     <EventActions
@@ -154,6 +160,7 @@ onMounted(async () => {
 <style>
 #app {
   width: 100vw;
+  min-height: 100vh;
   margin: 0;
   padding: 0;
   display: flex;

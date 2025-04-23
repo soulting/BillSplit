@@ -94,7 +94,7 @@ async function logIn(username, password) {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 90%;
+  min-height: 500px;
   width: 85%;
   background-color: white;
   border-radius: 15px;
