@@ -20,6 +20,7 @@ const user = ref({
   status: "waiting",
   events: [],
   curretEvent: null,
+  crrentEventDetails: null,
   currentPage: "yourEvents",
 });
 
@@ -38,7 +39,7 @@ function subscribeToUserEvents() {
 }
 
 function loadInnerEventData() {
-  getInnerEventData(user.value.curretEvent.event_id);
+  getInnerEventData(user);
 }
 
 const showEventActions = ref(false);
