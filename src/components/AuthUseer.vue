@@ -89,7 +89,7 @@ async function logIn(username, password) {
 
 <style scoped>
 .login-form {
-  position: relative;
+  position: absolute;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -100,6 +100,8 @@ async function logIn(username, password) {
   border-radius: 15px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
   gap: 30px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 h2 {

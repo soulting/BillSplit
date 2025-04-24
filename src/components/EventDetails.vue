@@ -34,6 +34,7 @@ onMounted(() => {
       <button>Salda</button>
       <button>Zdjęcia</button>
     </div>
+    <button class="add-expense">Dodaj wydatek</button>
   </div>
 </template>
 
@@ -44,10 +45,10 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  top: 10%;
+  top: 60px;
   left: 0;
   right: 0;
-  bottom: 10%;
+  bottom: 80px;
   padding-top: 50px;
 }
 
@@ -98,5 +99,10 @@ onMounted(() => {
   background-color: white;
   color: black;
   border: none;
+}
+
+.add-expense {
+  position: absolute;
+  bottom: 20px;
 }
 </style>
