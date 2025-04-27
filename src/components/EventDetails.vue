@@ -1,5 +1,6 @@
 <script setup>
 import { onMounted, ref } from "vue";
+import Salda from "./Salda.vue";
 
 const props = defineProps({
   returnToDashboard: {
@@ -12,6 +13,9 @@ const props = defineProps({
   },
   loadInnerEventData: {
     type: Function,
+  },
+  crrentEventDetails: {
+    type: Object,
   },
 });
 
@@ -34,6 +38,7 @@ onMounted(() => {
       <button>Salda</button>
       <button>Zdjęcia</button>
     </div>
+    <Salda :curretEventUsers="crrentEventDetails?.users"></Salda>
     <button class="add-expense">Dodaj wydatek</button>
   </div>
 </template>

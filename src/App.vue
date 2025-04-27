@@ -127,6 +127,7 @@ onMounted(async () => {
       :returnToDashboard="returnToDashboard"
       :curretEvent="user.curretEvent"
       :loadInnerEventData="loadInnerEventData"
+      :crrentEventDetails="user.crrentEventDetails"
     />
 
     <EventActions
